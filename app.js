@@ -7,9 +7,9 @@ app.use(cors());
 
 app.use(express.json());
 
-app.use("/api/peliculas", require("./routes/peliculas"));
-app.use("/api/funciones", require("./routes/funciones"));
+app.use("/peliculas", require("./routes/peliculas"));
+app.use("/funciones", require("./routes/funciones"));
 
-app.listen(3002, () => {
+app.listen(3000, () => {
   console.log("Example app listening on port 3002!");
 });
