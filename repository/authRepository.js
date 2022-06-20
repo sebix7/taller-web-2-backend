@@ -6,11 +6,11 @@ const poolData = {
   ClientId: process.env.CLIENT_ID,
 };
 
-const pool_region = "us-east-1";
+// const pool_region = "us-east-1";
 
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
-function registrarUsuario(nombre, apellido, direccion, email, contraseña) {
+function registrarUsuario(nombre, apellido, direccion, email, password) {
   var attributeList = [];
   attributeList.push(
     new AmazonCognitoIdentity.CognitoUserAttribute({
@@ -37,20 +37,14 @@ function registrarUsuario(nombre, apellido, direccion, email, contraseña) {
     })
   );
 
-  userPool.signUp(
-    email,
-    contraseña,
-    attributeList,
-    null,
-    function (err, result) {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      cognitoUser = result.user;
-      console.log("nombre usuario es: " + cognitoUser.getUsername());
+  userPool.signUp(email, password, attributeList, null, function (err, result) {
+    if (err) {
+      console.log(err);
+      return;
     }
-  );
+    cognitoUser = result.user;
+    console.log("nombre usuario es: " + cognitoUser.getUsername());
+  });
 }
 
 function loguearUsuario(email, password) {
@@ -76,3 +70,8 @@ function loguearUsuario(email, password) {
     },
   });
 }
+
+module.exports = {
+  registrarUsuario,
+  loguearUsuario,
+};
