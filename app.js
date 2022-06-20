@@ -8,7 +8,7 @@ app.use(cors());
 
 app.use(express.json());
 
-// app.use("/auth", require("./routes/auth"));
+app.use("/auth", require("./routes/auth"));
 app.use("/peliculas", require("./routes/peliculas"));
 app.use("/funciones", require("./routes/funciones"));
 app.use("/store", require("./routes/store"));
