@@ -1,11 +1,7 @@
 const { Router } = require("express");
+const { registrar } = require("../controllers/auth");
 const router = Router();
 
-router.post("/", (req, res) => {
-  res.json({
-    msg: "ok",
-    env: req.body,
-  });
-});
+router.post("/", registrar);
 
 module.exports = router;
