@@ -6,34 +6,26 @@ const poolData = {
   ClientId: process.env.CLIENT_ID,
 };
 
-// const pool_region = "us-east-1";
-
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
 function registrarUsuario(nombre, apellido, direccion, email, password) {
   var attributeList = [];
   attributeList.push(
     new AmazonCognitoIdentity.CognitoUserAttribute({
-      Name: "name",
+      Name: "custom:nombre",
       Value: nombre,
     })
   );
   attributeList.push(
     new AmazonCognitoIdentity.CognitoUserAttribute({
-      Name: "apellido",
+      Name: "custom:apellido",
       Value: apellido,
     })
   );
   attributeList.push(
     new AmazonCognitoIdentity.CognitoUserAttribute({
-      Name: "direccion",
+      Name: "custom:direccion",
       Value: direccion,
-    })
-  );
-  attributeList.push(
-    new AmazonCognitoIdentity.CognitoUserAttribute({
-      Name: "email",
-      Value: email,
     })
   );
 
@@ -43,7 +35,7 @@ function registrarUsuario(nombre, apellido, direccion, email, password) {
       return;
     }
     cognitoUser = result.user;
-    console.log("nombre usuario es: " + cognitoUser.getUsername());
+    console.log("user name is " + cognitoUser.getUsername());
   });
 }
 
