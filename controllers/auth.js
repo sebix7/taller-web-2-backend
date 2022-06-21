@@ -1,21 +1,51 @@
+const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
+const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
 const { request, response } = require("express");
-const { registrarUsuario } = require("../repository/authRepository");
+
+const poolData = {
+  UserPoolId: process.env.USER_POOL_ID,
+  ClientId: process.env.CLIENT_ID,
+};
+
+const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
 const registrar = (req = request, res = response) => {
   const { nombre, apellido, direccion, email, password } = req.body;
 
-  try {
-    registrarUsuario(nombre, apellido, direccion, email, password);
+  var attributeList = [];
+  attributeList.push(
+    new AmazonCognitoIdentity.CognitoUserAttribute({
+      Name: "custom:nombre",
+      Value: nombre,
+    })
+  );
+  attributeList.push(
+    new AmazonCognitoIdentity.CognitoUserAttribute({
+      Name: "custom:apellido",
+      Value: apellido,
+    })
+  );
+  attributeList.push(
+    new AmazonCognitoIdentity.CognitoUserAttribute({
+      Name: "custom:direccion",
+      Value: direccion,
+    })
+  );
 
-    res.json({
-      msg: "ok",
+  userPool.signUp(email, password, attributeList, null, function (err, result) {
+    if (err) {
+      res.status(401).json({
+        msg: err,
+        ok: false,
+      });
+    }
+
+    cognitoUser = result.user;
+    res.status(200).json({
+      ok: true,
+      user: cognitoUser.getUsername(),
     });
-  } catch (error) {
-    return res.status(404).json({
-      ok: false,
-      msg: "Error al registrar usuario",
-    });
-  }
+  });
 };
 
 module.exports = {
