@@ -31,11 +31,18 @@ function registrarUsuario(nombre, apellido, direccion, email, password) {
 
   userPool.signUp(email, password, attributeList, null, function (err, result) {
     if (err) {
-      console.log(err);
-      return;
+      res.status(400).json({
+        msg: err,
+        ok: false,
+      });
     }
     cognitoUser = result.user;
-    console.log("user name is " + cognitoUser.getUsername());
+    // console.log("user name is " + cognitoUser.getUsername());
+
+    res.status(200).json({
+      ok: true,
+      user: cognitoUser,
+    });
   });
 }
 
