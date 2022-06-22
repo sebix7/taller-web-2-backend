@@ -48,6 +48,33 @@ const registrar = (req = request, res = response) => {
   });
 };
 
+const login = (req = request, res = response) => {
+  const { email, password } = req.body;
+
+  var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
+    Username: email,
+    Password: password,
+  });
+
+  var userData = {
+    Username: email,
+    Pool: userPool,
+  };
+
+  var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+  cognitoUser.authenticateUser(authenticationDetails, {
+    onSuccess: function (result) {
+      console.log("Acces token + " + result.getAccessToken().getJwtToken());
+      console.log("Id token + " + result.getIdToken().getJwtToken());
+      console.log("Refresh token + " + result.getRefreshToken().getToken());
+    },
+    onFailure: function (err) {
+      console.log(err);
+    },
+  });
+};
+
 module.exports = {
   registrar,
+  login,
 };
