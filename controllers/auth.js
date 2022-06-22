@@ -34,14 +34,14 @@ const registrar = (req = request, res = response) => {
 
   userPool.signUp(email, password, attributeList, null, function (err, result) {
     if (err) {
-      res.status(401).json({
+      return res.status(401).json({
         msg: err,
         ok: false,
       });
     }
 
     cognitoUser = result.user;
-    res.status(200).json({
+    return res.status(200).json({
       ok: true,
       user: cognitoUser.getUsername(),
     });
@@ -67,14 +67,55 @@ const login = (req = request, res = response) => {
       console.log("Acces token + " + result.getAccessToken().getJwtToken());
       console.log("Id token + " + result.getIdToken().getJwtToken());
       console.log("Refresh token + " + result.getRefreshToken().getToken());
+
+      res.status(200).json({
+        ok: true,
+        result,
+      });
     },
     onFailure: function (err) {
-      console.log(err);
+      res.status(401).json({
+        ok: false,
+        err,
+      });
     },
   });
+};
+
+const validar = (req = request, res = response) => {
+  const { codigo, email } = req.body;
+
+  var userData = {
+    Username: email,
+    Pool: userPool,
+  };
+
+  var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+  cognitoUser.confirmRegistration(
+    JSON.stringify(codigo.codigo),
+    true,
+    function (err, result) {
+      if (err) {
+        return res.status(401).json({
+          ok: false,
+          err,
+        });
+        // console.log(err.message);
+        // console.log(!!result);
+      }
+      if (!!result) {
+        return res.status(200).json({
+          ok: true,
+          result,
+        });
+        // console.log("call result: " + result);
+      }
+    }
+  );
 };
 
 module.exports = {
   registrar,
   login,
+  validar,
 };
