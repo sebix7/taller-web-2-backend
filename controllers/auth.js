@@ -64,9 +64,9 @@ const login = (req = request, res = response) => {
   var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
   cognitoUser.authenticateUser(authenticationDetails, {
     onSuccess: function (result) {
-      console.log("Acces token + " + result.getAccessToken().getJwtToken());
-      console.log("Id token + " + result.getIdToken().getJwtToken());
-      console.log("Refresh token + " + result.getRefreshToken().getToken());
+      // console.log("Acces token + " + result.getAccessToken().getJwtToken());
+      // console.log("Id token + " + result.getIdToken().getJwtToken());
+      // console.log("Refresh token + " + result.getRefreshToken().getToken());
 
       res.status(200).json({
         ok: true,
