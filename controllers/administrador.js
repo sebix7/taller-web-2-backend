@@ -3,7 +3,6 @@ const { savePelicula } = require("../repository/peliculasRepository");
 const nuevaPelicula = async (req, res) => {
 	const bodyRequest = req.body;
 	const nuevo = {
-		id: bodyRequest.id,
 		titulo: bodyRequest.titulo,
 		imagen:
 			"data:" +
