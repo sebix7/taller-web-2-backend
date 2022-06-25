@@ -1,5 +1,4 @@
 const { Router } = require("express");
-const Lista = require("../models/ListaDePeliculas");
 const {
 	getUnaPelicula,
 	getPeliculas,

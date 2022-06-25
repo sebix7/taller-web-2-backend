@@ -6,7 +6,7 @@ const getPeliculas = () => {
 };
 
 const getUnaPelicula = (id) => {
-	const response = Model.findOne({ id });
+	const response = Model.findOne({ id },{ _id: 0, __v: 0 });
 	return response;
 };
 
