@@ -29,4 +29,15 @@ const updatePelicula = async (data) => {
 	return request;
 };
 
-module.exports = { getPeliculas, getUnaPelicula, savePelicula, updatePelicula };
+const deletePelicula = async (id) => {
+	const request = await Model.deleteOne({ id });
+	return request;
+};
+
+module.exports = {
+	getPeliculas,
+	getUnaPelicula,
+	savePelicula,
+	updatePelicula,
+	deletePelicula,
+};
