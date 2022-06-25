@@ -24,4 +24,9 @@ const savePelicula = async (data) => {
 	return request;
 };
 
-module.exports = { getPeliculas, getUnaPelicula, savePelicula };
+const updatePelicula = async (data) => {
+	const request = await Model.updateOne({ id: data.id }, data);
+	return request;
+};
+
+module.exports = { getPeliculas, getUnaPelicula, savePelicula, updatePelicula };
