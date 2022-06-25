@@ -1,7 +1,10 @@
 const { model, Schema } = require("mongoose");
 
 const peliculaSchema = new Schema({
-	id: Number,
+	id: {
+		type: Number,
+		unique: true,
+	},
 	titulo: {
 		type: String,
 		unique: true,
