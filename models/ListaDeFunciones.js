@@ -11,7 +11,7 @@ module.exports = {
       fecha: "13-06-22",
       horario: "10 HS.",
       valorEntrada: 500,
-      entradasDisponibles: 1000,
+      entradasDisponibles: 1000, 
     },
     {
       idFuncion: 2,

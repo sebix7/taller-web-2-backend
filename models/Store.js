@@ -5,10 +5,7 @@ const StoreSchema = new Schema({
 		type: Number,
 		unique: true,
 	},
-	producto: {
-		type: String,
-		unique: true,
-	},
+	producto: String,
 	imagen: String,
 	descripcion: String,
 	cantidad: Number,
