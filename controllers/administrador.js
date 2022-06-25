@@ -1,6 +1,7 @@
 const {
 	savePelicula,
 	updatePelicula,
+	deletePelicula,
 } = require("../repository/peliculasRepository");
 
 const nuevaPelicula = async (req, res) => {
@@ -48,10 +49,22 @@ const editarPelicula = async (req, res) => {
 		estreno: bodyRequest.estreno,
 	};
 	const actualizar = await updatePelicula(datosPelicula);
+	if (!actualizar.modifiedCount) {
+		return res.status(400).json({ mensaje: "No se modificó ningún dato" });
+	}
 	if (actualizar.matchedCount == 0) {
 		return res.status(404).json({ mensaje: "Película con id no encontrado" });
 	}
 	return res.status(200).json({ mensaje: "Pelicula editada correctamente" });
 };
 
-module.exports = { nuevaPelicula, editarPelicula };
+const eliminarPelicula = async (req, res) => {
+	const id = req.params.id;
+	const borrar = await deletePelicula(id);
+	if (!borrar.deletedCount) {
+		return res.status(400).json({ mensaje: "No se pudo borrar la película" });
+	}
+	return res.status(200).json({ mensaje: "Pelicula borrada correctamente" });
+};
+
+module.exports = { nuevaPelicula, editarPelicula, eliminarPelicula };
