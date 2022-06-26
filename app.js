@@ -13,7 +13,7 @@ app.use("/auth", require("./routes/auth"));
 app.use("/peliculas", require("./routes/peliculas"));
 app.use("/funciones", require("./routes/funciones"));
 app.use("/store", require("./routes/store"));
-app.use("/reserva", require("./routes/butacas"));
+app.use("/reserva", require("./routes/reserva"));
 app.use("/admin", require("./routes/admin"));
 
 app.listen(3000, () => {
