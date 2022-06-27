@@ -26,23 +26,19 @@ const getReservas = async (req,res) => {
 
 const deleteReserva = async (req, res)=>{
 	try{
-		const reserva = await Model.findById(req.params.id);
+		let id=parseInt(req.params.id);
+		const reserva = await Model.deleteOne({id});
 		res.json(reserva)
 		if(!reserva){
 			res.status(404).json({msg:'No existe la reserva que intenta eliminar'});
 		}
-		await Model.findOneAndDelete({id:req.params.id})
+		await Model.findOneAndDelete({id})
 		res.json({msg:'Reserva eliminada con exito'});
 	}catch(error){
 		console.log(error)
 		res.status(500).send('Hubo un error')
 	}
 }
-
-/*const deleteReserva = async (id) => {
-	const request = await Model.deleteOne({ id });
-	return request;
-};*/
 
 module.exports = {
 	//getReserva
