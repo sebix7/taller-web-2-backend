@@ -14,6 +14,7 @@ app.use("/peliculas", require("./routes/peliculas"));
 app.use("/funciones", require("./routes/funciones"));
 app.use("/store", require("./routes/store"));
 app.use("/reserva", require("./routes/reserva"));
+app.use("/historial-reservas", require("./routes/historial-reservas"));
 app.use("/admin", require("./routes/admin"));
 
 app.listen(3000, () => {

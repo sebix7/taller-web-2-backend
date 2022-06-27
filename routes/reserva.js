@@ -2,7 +2,7 @@ const { Router } = require("express");
 const Butacas = require("../models/Butacas");
 const router = Router();
 const reservaController= require("../controllers/reserva");
-const reservaRepositorio = require("../repository/reservaRepository");
+//const reservaRepositorio = require("../repository/reservaRepository");
 
 router.get("/", (req, res) => {
     res.json(Butacas.obtenerButacas());
@@ -20,9 +20,8 @@ router.get("/", (req, res) => {
 });*/
 
 //router.get("/:id",getReserva)
-//router.delete("/:id",deleteReserva)
 router.post("/",reservaController.nuevaReserva);
-router.get("/",reservaRepositorio.getReservas);
+
 //router.put("/:id",updateReserva)
 
 module.exports = router;
