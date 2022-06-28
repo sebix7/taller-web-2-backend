@@ -6,9 +6,9 @@ const StoreSchema = new Schema({
 		unique: true,
 	},
 	producto: String,
-	imagen: String,
-	descripcion: String,
-	cantidad: Number,
+	imagen: String, 
+	descripcion: String, 
+	cantidad: Number, 
 	precio: Number, 
 });
 
@@ -16,4 +16,4 @@ const StoreModel = model("Store", StoreSchema);
 
 module.exports = StoreModel;
 
-
+ 

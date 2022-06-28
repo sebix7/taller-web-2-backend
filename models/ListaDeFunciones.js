@@ -13,7 +13,7 @@ module.exports = {
       valorEntrada: 500,
       entradasDisponibles: 1000, 
     },
-    {
+    {     
       idFuncion: 2,
       idPelicula: 1,
       titulo: "Sonic",
