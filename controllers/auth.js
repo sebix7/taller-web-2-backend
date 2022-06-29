@@ -92,7 +92,7 @@ const validar = (req = request, res = response) => {
 
   var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
   cognitoUser.confirmRegistration(
-    JSON.stringify(codigo.codigo),
+    JSON.stringify(codigo),
     true,
     function (err, result) {
       if (err) {
