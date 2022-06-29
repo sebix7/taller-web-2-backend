@@ -2,8 +2,13 @@ const {
 	savePelicula,
 	updatePelicula,
 	deletePelicula,
+	getUnaPelicula,
 } = require("../repository/peliculasRepository");
 const { validationResult } = require("express-validator");
+const {
+	saveFunciones,
+	ultimoIdDeFuncionCargada,
+} = require("../repository/funcionesRepository");
 
 const nuevaPelicula = async (req, res) => {
 	let errors = validationResult(req.body);
@@ -85,4 +90,30 @@ const eliminarPelicula = async (req, res) => {
 	return res.status(200).json({ mensaje: "Pelicula borrada correctamente" });
 };
 
-module.exports = { nuevaPelicula, editarPelicula, eliminarPelicula };
+const agregarFunciones = async (req, res) => {
+	const bodyRequest = req.body;
+	const nuevasFunciones = bodyRequest.funciones;
+	const pelicula = await getUnaPelicula(bodyRequest.idPelicula);
+	let ultimoId = await ultimoIdDeFuncionCargada();
+	if (!ultimoId) {
+		ultimoId = 1;
+	} else {
+		ultimoId++;
+	}
+	for (let item of nuevasFunciones) {
+		console.log(ultimoId);
+		item.idPelicula = bodyRequest.idPelicula;
+		item.titulo = pelicula.titulo;
+		item.idFuncion = ultimoId;
+		ultimoId++;
+	}
+	const agregarFunciones = await saveFunciones(nuevasFunciones);
+	res.status(201).json({ mensaje: "Funciones creadas correctamente" });
+};
+
+module.exports = {
+	nuevaPelicula,
+	editarPelicula,
+	eliminarPelicula,
+	agregarFunciones,
+};
