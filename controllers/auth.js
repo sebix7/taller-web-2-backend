@@ -1,6 +1,10 @@
 const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
+const AWS = require("aws-sdk");
 const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
 const { request, response } = require("express");
+const { jwk } = require("../helpers/jwk");
+var jwt = require("jsonwebtoken");
+var jwkToPem = require("jwk-to-pem");
 
 const poolData = {
   UserPoolId: process.env.USER_POOL_ID,
@@ -68,10 +72,7 @@ const login = (req = request, res = response) => {
       // console.log("Id token + " + result.getIdToken().getJwtToken());
       // console.log("Refresh token + " + result.getRefreshToken().getToken());
 
-      res.status(200).json({
-        ok: true,
-        result,
-      });
+      res.status(200).json(result.getAccessToken().getJwtToken());
     },
     onFailure: function (err) {
       res.status(401).json({
@@ -114,8 +115,26 @@ const validar = (req = request, res = response) => {
   );
 };
 
+const leerDataToken = (req = request, res = response) => {
+  var pem = jwkToPem(jwk.keys[1]);
+
+  const { token } = req.body;
+  // console.log(JSON.parse(token));
+
+  jwt.verify(JSON.parse(token), pem, function (err, decoded) {
+    if (err) {
+      return res.status(401).json({
+        msg: "error",
+      });
+    } else {
+      console.log(decoded.sub);
+    }
+  });
+};
+
 module.exports = {
   registrar,
   login,
   validar,
+  leerDataToken,
 };
