@@ -124,10 +124,11 @@ const leerDataToken = (req = request, res = response) => {
   jwt.verify(JSON.parse(token), pem, function (err, decoded) {
     if (err) {
       return res.status(401).json({
-        msg: "error",
+        ok: false,
+        msg: err,
       });
     } else {
-      console.log(decoded.sub);
+      res.status(200).json(decoded.sub);
     }
   });
 };
