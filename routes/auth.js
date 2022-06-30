@@ -1,6 +1,11 @@
 const { Router } = require("express");
 const { check, validationResult } = require("express-validator");
-const { registrar, login, validar } = require("../controllers/auth");
+const {
+  registrar,
+  login,
+  validar,
+  leerDataToken,
+} = require("../controllers/auth");
 const router = Router();
 
 router.post(
@@ -60,5 +65,7 @@ router.post(
 
   validar
 );
+
+router.post("/decode", leerDataToken);
 
 module.exports = router;
