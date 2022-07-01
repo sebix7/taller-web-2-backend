@@ -2,10 +2,12 @@ const { Router } = require("express");
 const Butacas = require("../models/Butacas");
 const router = Router();
 const reservaController= require("../controllers/reserva");
+const butacaRepositorio = require("../repository/butacasRepository");
 //const reservaRepositorio = require("../repository/reservaRepository");
 
-router.get("/", (req, res) => {
-    res.json(Butacas.obtenerButacas());
+router.get("/", async(req, res) => {
+	const butacas = await butacaRepositorio.getButacas();
+	return res.status(200).json({ butacas: butacas });
   });
   
 /*router.get("/:id", async (req, res) => {
