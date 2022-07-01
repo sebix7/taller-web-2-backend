@@ -5,8 +5,8 @@ const getPeliculas = () => {
 	return response;
 };
 
-const getUnaPelicula = (id) => {
-	const response = Model.findOne({ id },{ _id: 0, __v: 0 });
+const getUnaPelicula = async (id) => {
+	const response = await Model.findOne({ id }, { _id: 0, __v: 0 });
 	return response;
 };
 

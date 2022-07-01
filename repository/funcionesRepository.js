@@ -11,4 +11,20 @@ const getFuncionesDeUnaPelicula = async (id) => {
 	return response;
 };
 
-module.exports = { getFuncionesDeUnaPelicula };
+const ultimoIdDeFuncionCargada = async () => {
+	const request = await Model.findOne({}).sort({ idFuncion: -1 }).limit(1);
+	const id = request.idFuncion;
+	return id;
+};
+
+const saveFunciones = async (data) => {
+	const request = await Model.insertMany(data);
+	console.log(request);
+	return request;
+};
+
+module.exports = {
+	getFuncionesDeUnaPelicula,
+	saveFunciones,
+	ultimoIdDeFuncionCargada,
+};

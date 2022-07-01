@@ -8,8 +8,14 @@ const funcionSchema = new Schema({
 	dia: String,
 	fecha: Date,
 	horario: String,
-	valorEntrada: Number,
-	entradasDisponibles: Number,
+	valorEntrada: {
+		type: Number,
+		default: 500,
+	},
+	entradasDisponibles: {
+		type: Number,
+		default: 1000,
+	},
 });
 
 const funcionModel = model("funciones", funcionSchema);

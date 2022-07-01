@@ -2,16 +2,19 @@ const {
 	savePelicula,
 	updatePelicula,
 	deletePelicula,
+	getUnaPelicula,
 } = require("../repository/peliculasRepository");
 const { validationResult } = require("express-validator");
+const {
+	saveFunciones,
+	ultimoIdDeFuncionCargada,
+} = require("../repository/funcionesRepository");
 
 const nuevaPelicula = async (req, res) => {
 	let errors = validationResult(req.body);
 	if (!errors.isEmpty()) {
 		return res.status(400).json({ errores: errors.array() });
 	}
-	console.log(req.body);
-
 	const bodyRequest = req.body;
 	const nuevo = {
 		titulo: bodyRequest.titulo,
@@ -75,7 +78,6 @@ const editarPelicula = async (req, res) => {
 
 const eliminarPelicula = async (req, res) => {
 	const id = req.params.id;
-	console.log(id);
 	const borrar = await deletePelicula(id);
 	if (!borrar.deletedCount) {
 		return res
@@ -85,4 +87,37 @@ const eliminarPelicula = async (req, res) => {
 	return res.status(200).json({ mensaje: "Pelicula borrada correctamente" });
 };
 
-module.exports = { nuevaPelicula, editarPelicula, eliminarPelicula };
+const obtenerDiaDeFecha = (fecha) => {
+	const nombreDia = new Date(fecha).toLocaleDateString("es-AR", {
+		weekday: "long",
+	});
+	return nombreDia.charAt(0).toUpperCase() + nombreDia.slice(1);
+};
+
+const agregarFunciones = async (req, res) => {
+	const bodyRequest = req.body;
+	const nuevasFunciones = bodyRequest.funciones;
+	const pelicula = await getUnaPelicula(bodyRequest.idPelicula);
+	let ultimoId = await ultimoIdDeFuncionCargada();
+	if (!ultimoId) {
+		ultimoId = 1;
+	} else {
+		ultimoId++;
+	}
+	for (let item of nuevasFunciones) {
+		item.idPelicula = bodyRequest.idPelicula;
+		item.dia = obtenerDiaDeFecha(item.fecha);
+		item.titulo = pelicula.titulo;
+		item.idFuncion = ultimoId;
+		ultimoId++;
+	}
+	const agregarFunciones = await saveFunciones(nuevasFunciones);
+	res.status(201).json({ mensaje: "Funciones creadas correctamente" });
+};
+
+module.exports = {
+	nuevaPelicula,
+	editarPelicula,
+	eliminarPelicula,
+	agregarFunciones,
+};
