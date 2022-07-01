@@ -5,6 +5,7 @@ const reservaSchema = new Schema({
 		type: Number,
 		unique: true,
 	},
+	usuario:String,
 	pelicula:String,
 	asiento: String,
 	fechaFuncion: String,

@@ -6,6 +6,7 @@ const nuevaReserva = async (req, res) => {
 	const bodyRequest = req.body;
 	const nuevo = {
         id: bodyRequest.id,
+		usuario:bodyRequest.usuario,
 		pelicula: bodyRequest.pelicula,
 		asiento: bodyRequest.asiento,
 		fechaFuncion: bodyRequest.fechaFuncion,
