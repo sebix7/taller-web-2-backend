@@ -32,6 +32,12 @@ const nuevaPelicula = async (req, res) => {
 		estreno: true,
 	};
 	const guardarPelicula = await savePelicula(nuevo);
+	if (guardarPelicula.error) {
+		return res.status(400).json({
+			mensaje: "Ya existe una película con el mismo título",
+			error: true,
+		});
+	}
 	if (!guardarPelicula) {
 		return res
 			.status(404)

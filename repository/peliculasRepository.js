@@ -20,7 +20,9 @@ const savePelicula = async (data) => {
 		data.id = ultimaPeliculaCargada.id + 1;
 	}
 	const pelicula = new Model(data);
-	const request = await pelicula.save().catch((err) => null);
+	const request = await pelicula
+		.save()
+		.catch((err) => ({ error: err.code || null }));
 	return request;
 };
 

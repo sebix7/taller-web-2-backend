@@ -19,7 +19,6 @@ const ultimoIdDeFuncionCargada = async () => {
 
 const saveFunciones = async (data) => {
 	const request = await Model.insertMany(data);
-	console.log(request);
 	return request;
 };
 

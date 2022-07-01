@@ -1,19 +1,16 @@
-const {
-	saveReserva
-} = require("../repository/reservaRepository");
+const { saveReserva } = require("../repository/reservaRepository");
 
 const nuevaReserva = async (req, res) => {
 	const bodyRequest = req.body;
 	const nuevo = {
-        id: bodyRequest.id,
-		usuario:bodyRequest.usuario,
+		id: bodyRequest.id,
+		usuario: bodyRequest.usuario,
 		pelicula: bodyRequest.pelicula,
 		asiento: bodyRequest.asiento,
 		fechaFuncion: bodyRequest.fechaFuncion,
-		candySnack: bodyRequest.candySnack	
+		candySnack: bodyRequest.candySnack,
 	};
-   
-    console.log(nuevo)
+
 	const guardarReserva = await saveReserva(nuevo);
 	if (!guardarReserva) {
 		return res
@@ -23,5 +20,4 @@ const nuevaReserva = async (req, res) => {
 	return res.status(201).json({ mensaje: "Reserva registrada correctamente" });
 };
 
-module.exports = { nuevaReserva};
-
+module.exports = { nuevaReserva };
