@@ -15,8 +15,6 @@ const nuevaPelicula = async (req, res) => {
 	if (!errors.isEmpty()) {
 		return res.status(400).json({ errores: errors.array() });
 	}
-	console.log(req.body);
-
 	const bodyRequest = req.body;
 	const nuevo = {
 		titulo: bodyRequest.titulo,
@@ -80,7 +78,6 @@ const editarPelicula = async (req, res) => {
 
 const eliminarPelicula = async (req, res) => {
 	const id = req.params.id;
-	console.log(id);
 	const borrar = await deletePelicula(id);
 	if (!borrar.deletedCount) {
 		return res
@@ -88,6 +85,13 @@ const eliminarPelicula = async (req, res) => {
 			.json({ mensaje: "No se encontró la película con el id asignado" });
 	}
 	return res.status(200).json({ mensaje: "Pelicula borrada correctamente" });
+};
+
+const obtenerDiaDeFecha = (fecha) => {
+	const nombreDia = new Date(fecha).toLocaleDateString("es-AR", {
+		weekday: "long",
+	});
+	return nombreDia.charAt(0).toUpperCase() + nombreDia.slice(1);
 };
 
 const agregarFunciones = async (req, res) => {
@@ -101,8 +105,8 @@ const agregarFunciones = async (req, res) => {
 		ultimoId++;
 	}
 	for (let item of nuevasFunciones) {
-		console.log(ultimoId);
 		item.idPelicula = bodyRequest.idPelicula;
+		item.dia = obtenerDiaDeFecha(item.fecha);
 		item.titulo = pelicula.titulo;
 		item.idFuncion = ultimoId;
 		ultimoId++;
