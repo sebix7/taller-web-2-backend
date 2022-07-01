@@ -6,7 +6,6 @@ const reservaRepositorio = require("../repository/reservaRepository");
 /*router.get("/",(req, res)=>{
 	res.json(reservaRepositorio.getReservas)
 });*/
-router.get("/",reservaRepositorio.getReservas);
-router.delete("/:id",reservaRepositorio.deleteReserva);
+router.get("/:id",reservaRepositorio.getReservas);
 
 module.exports = router;
