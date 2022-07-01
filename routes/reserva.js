@@ -3,6 +3,7 @@ const Butacas = require("../models/Butacas");
 const router = Router();
 const reservaRepository= require("../repository/reservaRepository");
 const butacaRepositorio = require("../repository/butacasRepository");
+const butacataController= require("../controllers/butacas");
 
 router.get("/", async(req, res) => {
 	const butacas = await butacaRepositorio.getButacas();
@@ -17,7 +18,8 @@ router.get("/", async(req, res) => {
 
   });
   
-//reservaRepository.saveReserva);
+  router.put("/:columna",butacataController.editarButaca);
+  router.get("/:columna",butacaRepositorio.getButaca);
 
 
 module.exports = router;
